@@ -1,4 +1,4 @@
-@extends('layouts.admin.layout')
+@extends('layouts.admin')
 
 @section('title', 'Roles')
 
@@ -8,7 +8,7 @@
         <div class="card-header">
             <h4>Roles</h4>
             @can('role-add')
-            <a class="btn btn-dark" href="{{ route('admin.role.createOrUpdate') }}" style="align-items: end;">Add Role</a>
+            <a class="btn btn-dark" href="{{ route('admin.roles.createOrUpdate') }}" style="align-items: end;">Add Role</a>
             @endcan
         </div>
         <div class="card-body">
@@ -27,11 +27,11 @@
                             <td>{{ $role->name }}</td>
                             <td>
                                 @can('role-edit')
-                                <a href="{{ route('admin.role.createOrUpdate', ['role' => $role->id]) }}"
+                                <a href="{{ route('admin.roles.createOrUpdate', ['role' => $role->id]) }}"
                                     class="btn btn-sm btn-success">Edit</a>
                                 @endcan
                                 @can('role-delete')
-                                <form action="{{ route('admin.role.destroy', ['role' => $role->id]) }}" method="POST"
+                                <form action="{{ route('admin.roles.destroy', ['role' => $role->id]) }}" method="POST"
                                     style="display: inline;">
                                     @csrf
                                     @method('DELETE')

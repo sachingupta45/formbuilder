@@ -29,12 +29,7 @@ Route::middleware('auth')->group(function () {
    Route::resource('/form',FormDataController::class);
 });
 
-Route::middleware('auth')->prefix('roles')->name('admin.roles.')->group(function () {
-    Route::get('/', [RolePermissionController::class, 'roleIndex'])->middleware(['permission:role-view'])->name('index');
-    Route::get('/create/{role?}', [RolePermissionController::class, 'createOrUpdate'])->middleware(['permission:role-add', 'permission:role-edit'])->name('createOrUpdate');
-    Route::post('/store/{role?}', [RolePermissionController::class, 'storeRole'])->middleware(['permission:role-add', 'permission:role-edit'])->name('store');
-    Route::delete('/{role}', [RolePermissionController::class, 'destroy'])->middleware(['permission:role-delete'])->name('destroy');
-});
+
 
 
 require __DIR__.'/auth.php';

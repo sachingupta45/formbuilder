@@ -21,7 +21,7 @@ class RolePermissionController extends Controller
      * @return \Illuminate\View\View
      */
     public function roleIndex()
-    {dd('here');
+    {
         try {
             $roles = Role::get();
             return view('admin.role.index', compact('roles'));
@@ -72,7 +72,8 @@ class RolePermissionController extends Controller
             }
 
             $role->syncPermissions($request->permissions);
-            return redirect()->route('admin.role.index')->with('success', 'Role saved successfully.');
+
+            return redirect()->route('admin.roles.index')->with('success', 'Role saved successfully.');;
         } catch (\Exception $e) {
             Log::error('Error in storeRole: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Role save failed: ' . $e->getMessage());
@@ -159,7 +160,7 @@ class RolePermissionController extends Controller
         try {
             $role->permissions()->detach();
             $role->delete();
-            return redirect()->route('admin.role.index')->with('success', 'Role deleted successfully.');
+            return redirect()->route('admin.roles.index')->with('success', 'Role deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Error in destroy: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Role deletion failed: ' . $e->getMessage());

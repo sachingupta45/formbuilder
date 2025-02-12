@@ -49,7 +49,8 @@
             @include('layouts.admin_sidebar')
 
             <div class="main-content">
-                {{ $slot }}
+                {{-- {{ $slot }} --}}
+                @yield('content')
             </div>
         </div>
     </div>

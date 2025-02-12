@@ -16,11 +16,16 @@
                 <li @class(['dropdown','active'=>request()->routeIs('admin.data.*')]) >
                   <a href="{{route('admin.role.index')}}" class="nav-link"><i data-feather="codepen"></i><span>data</span></a>
                 </li>
-                {{-- @can('role-view') --}}
+                @can('role-view')
                 <li @class(['dropdown','active'=>request()->routeIs('admin.roles.*')]) >
                   <a href="{{route('admin.roles.index')}}" class="nav-link"><i data-feather="codepen"></i><span>roles and permissions</span></a>
                 </li>
-                {{-- @endcan --}}
+                @endcan
+                @can('user-view')
+                <li class="dropdown @if (in_array(Route::current()->getName(), ['admin.users.index'])) active @endif">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link"><i class="fa-solid fa-user"></i><span> Users </span></a>
+                </li>
+                @endcan
             </ul>
         </aside>
     </div>

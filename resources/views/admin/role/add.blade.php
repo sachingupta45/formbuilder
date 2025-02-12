@@ -1,4 +1,4 @@
-@extends('layouts.admin.layout')
+@extends('layouts.admin')
 
 @section('title', $role ? 'Edit Role' : 'Add Role')
 
@@ -8,7 +8,7 @@
             <h3>{{ $role ? 'Edit Role' : 'Add Role' }}</h3>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ $role ? route('admin.role.store', ['role' => $role->id]) : route('admin.role.store') }}" id="role-permission">
+            <form method="POST" action="{{ $role ? route('admin.roles.store', ['role' => $role->id]) : route('admin.roles.store') }}" id="role-permission">
                 @csrf
 
                 <div class="form-group">
@@ -55,7 +55,7 @@
     </div>
 @endsection
 
-@push('scripts')
+@push('particular-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="{{ asset('assets/admin/js/rolePermission.js') }}"></script>
 @endpush

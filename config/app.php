@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'secrect' => env('ENC_DEC_SECRET', '7u9TRdRdP843bjh43yu78343yuXn9dhd774GcX'),
+    'encryptionMethod' => env('ENC_DEC_METHOD', 'AES-256-CBC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +137,7 @@ return [
     |
     */
 
-   
+
      /*
     |--------------------------------------------------------------------------
     | Aliases

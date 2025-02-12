@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable , HasRoles;
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +22,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
+        'encrypt_password',
+        'status,'
     ];
 
     /**
@@ -46,5 +50,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    
+
 }
