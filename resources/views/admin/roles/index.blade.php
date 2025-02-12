@@ -20,7 +20,6 @@
             var formRenderInstance = $('#formbuilderdata').formRender(formRenderOptions);
             console.log(formRenderInstance.userData);
             jQuery('#submitform').on('click',function () {
-                console.log("hlo sachin gupta");
                 console.log(formRenderInstance.userData);
             })
             

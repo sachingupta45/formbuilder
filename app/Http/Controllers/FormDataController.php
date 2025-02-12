@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use auth;
 use App\Models\FormData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,7 +56,7 @@ class FormDataController extends Controller
             }
             $data=[
                 'user_id'=>auth()->id(),
-                'name'=>'sachin',
+                'name'=>'form_name',
                 'fields'=>$request->form_structure,
             ];
             // FormData::create($data);
@@ -63,13 +64,18 @@ class FormDataController extends Controller
                 ['id'=>$request->previous_form_id],
                 $data
             );
+            $form = FormData::find($request->previous_form_id);
+
+            $html = Blade::render('<x-editor_viewer :form="$form" />', [
+                'form' => $form,
+            ]);
             return response()->json([
                 'success' => true,
                 'message' => 'Data saved successfully!',
-                'redirect'=>route('form.index'),
+                'data'=>$html,
             ]);
         } catch (\Exception $th) {
-            return response()->json(['success'=>false,'message'=>$th->getMessage()]);
+            return response()->json(['success'=>false,'message'=>$th->getMessage(),'data' => null]);
         }
     }
 
@@ -102,6 +108,9 @@ class FormDataController extends Controller
      */
     public function destroy(FormData $formData)
     {
-        //
+        return view('test');
     }
+
+    
+
 }

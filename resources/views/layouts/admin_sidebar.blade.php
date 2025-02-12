@@ -2,7 +2,7 @@
     <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
             <div class="sidebar-brand">
-                    <span class="logo-name">{{ __('Sachin Gupta') }}</span>
+                    <span class="logo-name">{{ env('APP_NAME') }}</span>
             </div>
             {{-- <x-notify::notify /> --}}
             <ul class="sidebar-menu">
@@ -16,6 +16,11 @@
                 <li @class(['dropdown','active'=>request()->routeIs('admin.data.*')]) >
                   <a href="{{route('admin.role.index')}}" class="nav-link"><i data-feather="codepen"></i><span>data</span></a>
                 </li>
+                {{-- @can('role-view') --}}
+                <li @class(['dropdown','active'=>request()->routeIs('admin.roles.*')]) >
+                  <a href="{{route('admin.roles.index')}}" class="nav-link"><i data-feather="codepen"></i><span>roles and permissions</span></a>
+                </li>
+                {{-- @endcan --}}
             </ul>
         </aside>
     </div>

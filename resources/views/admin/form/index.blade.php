@@ -15,7 +15,7 @@
                         <th>Sr. no.</th>
                         <th>Name</th>
                         <th>created_at</th>
-                        <th>View</th>
+                        {{-- <th>View</th> --}}
                         <th>Action</th>
                     </tr>
                     @forelse ($forms as $form)
@@ -23,7 +23,7 @@
                             <td>{{ $form->id ?? 'N/A' }}</td>
                             <td>{{ $form->name ??'N/A' }}</td>
                             <td>{{ $form->created_at ??'N/A' }}</td>
-                            <td><a href="{{route('admin.form.show',['form'=>$form->id])}}" class="btn bg-pink">View</a></td>
+                            {{-- <td><a href="{{route('admin.form.show',['form'=>$form->id])}}" class="btn bg-pink">View</a></td> --}}
                             <td><a href="{{route('admin.form.edit',['form'=>$form->id])}}" class="btn btn-primary">Edit</a></td>
                         </tr>
 
