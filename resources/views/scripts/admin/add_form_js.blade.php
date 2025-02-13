@@ -76,7 +76,7 @@
                 },
                 {
                     label: "Phone Number",
-                    type: "text", 
+                    type: "text",
                     icon: "Custom",
                     required: true
                 }
@@ -113,16 +113,18 @@
                 .then(response => response.json())
                 .then(response => {
                     if (response.success === true && response.data) {
-                        localStorage.setItem("success_message",
-                            "Your data has been saved successfully.");
-                        iziToast.success({
-                            title: "Success",
-                            message: response.message,
-                            position: "topCenter",
-                        });
+                        // localStorage.setItem("success_message",
+                        //     "Your data has been saved successfully.");
+
+                        // iziToast.success({
+                        //     title: "Success",
+                        //     message: response.message,
+                        //     position: "topCenter",
+                        // });
                         if (response.data) {
                             $('#main_editor_container').html(response.data);
                         }
+                        window.location.href = '{{route('admin.form.index',['msg'=>'Your data has been saved successfully.' ])}}';
                     } else if (response.errors) {
                         Object.values(response.errors).forEach(errorMessages => {
                             errorMessages.forEach(message => {

@@ -79,9 +79,9 @@ option.disabled-option {
 
 
 .form-icon {
-    position: absolute; 
-    top: 45px; 
-    right: 25px; 
+    position: absolute;
+    top: 45px;
+    right: 25px;
     cursor: pointer;
 }
 
@@ -137,7 +137,7 @@ option.disabled-option {
     opacity: 0.7;
 }
 .btn-primary, .btn-dark{
-    display: flex;
+    /* display: flex; */
     align-items: center;
     justify-content: center;
 }
@@ -390,7 +390,7 @@ option.disabled-option {
 }
 
 .btn-primary .fa-times {
-    margin-right: 5px; 
+    margin-right: 5px;
     font-size: 1.5em;
 }
 
@@ -399,10 +399,10 @@ input.form-control {
 }
 
 .bootstrap-timepicker-widget.dropdown-menu {
-    z-index: 1050 !important; 
+    z-index: 1050 !important;
 }
 .bootstrap-timepicker-widget table td input {
-    width: 50px !important; 
+    width: 50px !important;
 }
 
 .date-range.dash-date input{

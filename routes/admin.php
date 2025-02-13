@@ -21,7 +21,16 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::middleware(['auth'])->group(function () {
 
         Route::resource('/role',RoleController::class);
-        Route::resource('/form',FormDataController::class);
+        Route::resource('/form', FormDataController::class)
+            ->middleware([
+                'index' => 'permission:form-view',
+                'create' => 'permission:form-add',
+                'store' => 'permission:form-add',
+                'show' => 'permission:form-view',
+                'edit' => 'permission:form-edit',
+                'update' => 'permission:form-edit',
+                'destroy' => 'permission:form-delete',
+            ]);
 
         Route::get('/logout1', function () {
             Auth::logout();

@@ -6,6 +6,7 @@ use auth;
 use App\Models\FormData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Session;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,8 +15,13 @@ class FormDataController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $message = $request->query('msg');
+        if($message){
+            Session::flash('success', $message);
+        }
+
         $forms=FormData::all(['id','name','created_at']);
        return view('admin.form.index',compact('forms'));
     }
@@ -41,13 +47,13 @@ class FormDataController extends Controller
                 return response()->json([
                     'success' => false,
                     'errors' => 'no any auth found'
-                ], 401); 
+                ], 401);
             }
 
             $validator = Validator::make($request->all(), [
                 'form_structure' => ['required'],
             ]);
-            
+
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
@@ -106,11 +112,17 @@ class FormDataController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FormData $formData)
+    public function destroy(FormData $form)
     {
-        return view('test');
+        try {
+            $form->delete();
+            // return view('test');
+            return redirect()->route('admin.form.index')->with('success', 'Form data deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.form.index')->with('error', 'Failed to delete form data.');
+        }
     }
 
-    
+
 
 }
