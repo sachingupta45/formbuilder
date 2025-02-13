@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- CSS Files -->
@@ -49,8 +49,8 @@
             @include('layouts.admin_sidebar')
 
             <div class="main-content">
-                {{-- {{ $slot }} --}}
-                @yield('content')
+                {{ $slot }}
+                {{-- @yield('content') --}}
             </div>
         </div>
     </div>

@@ -1,61 +1,65 @@
-@extends('layouts.admin')
+<x-admin-layout>
 
-@section('title', $role ? 'Edit Role' : 'Add Role')
+    @section('title', $role ? 'Edit Role' : 'Add Role')
 
-@section('content')
-    <div class="card">
-        <div class="card-header">
-            <h3>{{ $role ? 'Edit Role' : 'Add Role' }}</h3>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="{{ $role ? route('admin.roles.store', ['role' => $role->id]) : route('admin.roles.store') }}" id="role-permission">
-                @csrf
+    <section class="section">
 
-                <div class="form-group">
-                    <label for="name">Role Name</label>
-                    <input type="text" name="name" id="name"
-                           class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $role->name ?? '') }}"
-                           placeholder=" ">
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <label for="permissions">Permissions</label>
-                        @forelse($permissions as $groupName => $groupPermissions)
-                            <div class="form-group">
-                                <h5>{{ ucfirst($groupName) }}</h5>
-                                @foreach($groupPermissions as $permission)
-                                    <div class="form-check">
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
-                                               class="form-check-input" id="permission-{{ $permission->id }}"
-                                               {{ in_array($permission->name, old('permissions', $rolePermissions ?? [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="permission-{{ $permission->id }}">
-                                            {{ $permission->label }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @empty
-                            <p>No permissions found</p>
-                        @endforelse
-                        @error('permissions')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+        <div class="card">
+            <div class="card-header">
+                <h3>{{ $role ? 'Edit Role' : 'Add Role' }}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST"
+                    action="{{ $role ? route('admin.roles.store', ['role' => $role->id]) : route('admin.roles.store') }}"
+                    id="role-permission">
+                    @csrf
+
+                    <div class="form-group">
+                        <label for="name">Role Name</label>
+                        <input type="text" name="name" id="name"
+                            class="form-control @error('name') is-invalid @enderror"
+                            value="{{ old('name', $role->name ?? '') }}" placeholder=" ">
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary">{{ $role ? 'Update' : 'Create' }}</button>
-            </form>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="permissions">Permissions</label>
+                            @forelse($permissions as $groupName => $groupPermissions)
+                                <div class="form-group">
+                                    <h5>{{ ucfirst($groupName) }}</h5>
+                                    @foreach ($groupPermissions as $permission)
+                                        <div class="form-check">
+                                            <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
+                                                class="form-check-input" id="permission-{{ $permission->id }}"
+                                                {{ in_array($permission->name, old('permissions', $rolePermissions ?? [])) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="permission-{{ $permission->id }}">
+                                                {{ $permission->label }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @empty
+                                <p>No permissions found</p>
+                            @endforelse
+                            @error('permissions')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">{{ $role ? 'Update' : 'Create' }}</button>
+                </form>
+            </div>
         </div>
-    </div>
-@endsection
+    </section>
 
-@push('particular-scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-    <script src="{{ asset('assets/admin/js/rolePermission.js') }}"></script>
-@endpush
+    @push('particular-scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        <script src="{{ asset('assets/admin/js/rolePermission.js') }}"></script>
+    @endpush
+</x-admin-layout>
