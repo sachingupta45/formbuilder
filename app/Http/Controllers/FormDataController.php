@@ -51,19 +51,41 @@ class FormDataController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                'form_structure' => ['required'],
+                'form_structure' => 'required|json',
+                'files.*' => [
+                    'file',
+                    'max:102400', // 100MB max
+                    'mimes:pdf,doc,docx,txt,xls,xlsx,jpg,jpeg,png,mp3,wav,mp4,avi,mov'
+                ],
+                'previous_form_id' => 'nullable|exists:forms,id'
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
                     'errors' => $validator->errors()
-                ], 422); // 422 Unprocessable Entity (Validation Error)
+                ], 422);
             }
+
+            $uploadedFiles = [];
+
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $path = $file->store('form-uploads', 'public');
+                    $uploadedFiles[] = [
+                        'original_name' => $file->getClientOriginalName(),
+                        'path' => $path,
+                        'mime_type' => $file->getMimeType(),
+                        'size' => $file->getSize()
+                    ];
+                }
+            }
+
             $data=[
                 'user_id'=>auth()->id(),
                 'name'=>'form_name',
                 'fields'=>$request->form_structure,
+                'files' => $uploadedFiles,
             ];
             // FormData::create($data);
             FormData::updateOrCreate(
