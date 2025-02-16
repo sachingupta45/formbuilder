@@ -1,7 +1,7 @@
 <x-admin-layout>
     <section class="section">
         <div class="card">
-            <form id="formdform" action="{{ route('user.store') }}">
+            <form id="formdform" action="{{ route('user.form.store') }}">
                 <input type="hidden" name="form_id" value="{{ jsencode_userdata($form->id ?? '') }}">
                 <div class="card">
                     <div class="card-body" id="formbuilderdata"></div>

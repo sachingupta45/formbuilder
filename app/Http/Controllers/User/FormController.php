@@ -21,12 +21,12 @@ class FormController extends Controller
     {
         try {
             $decryptedFormId = jsdecode_userdata($form);
-            if(FormSubmission::where('form_id',$decryptedFormId)->exists()){
-                return redirect()->route('user.form.edit',$form);
-            }else{
-                $form = FormData::findOrFail($decryptedFormId);
-                return view('user.form.show_form', compact('form'));
-            }
+            // if(FormSubmission::where('form_id',$decryptedFormId)->exists()){
+            //     return redirect()->route('user.form.edit',$form);
+            // }else{
+            // }
+            $form = FormData::findOrFail($decryptedFormId);
+            return view('user.form.show_form', compact('form'));
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Invalid form link');

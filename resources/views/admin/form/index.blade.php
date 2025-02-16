@@ -52,7 +52,7 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-secondary btn-sm copy-link-btn"
-                                            data-link="{{ route('user.form', ['form' => jsencode_userdata($form->id)]) }}"
+                                            data-link="{{ route('user.form.create', ['form' => jsencode_userdata($form->id)]) }}"
                                             data-toggle="tooltip" title="Copy link">
                                             <i class="fas fa-copy"></i> Copy
                                         </button>
