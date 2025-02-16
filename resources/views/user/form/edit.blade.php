@@ -1,7 +1,7 @@
 <x-admin-layout>
     <section class="section">
         <div class="card">
-            <form id="formdform" action="{{ route('user.form.update', $token) }}">
+            <form id="formdform" action="{{ route('user.form.update', $form) }}">
                 <div class="card">
                     <div class="card-body" id="formbuilderdata"></div>
                 </div>

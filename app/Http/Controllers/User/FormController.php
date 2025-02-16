@@ -21,9 +21,9 @@ class FormController extends Controller
     {
         try {
             $decryptedFormId = jsdecode_userdata($form);
-            
+
             $form = FormData::findOrFail($decryptedFormId);
-            
+
             return view('user.form.show_form', compact('form'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Invalid form link');
@@ -31,7 +31,7 @@ class FormController extends Controller
     }
 
     /**
-     * here stotre the data of a user 
+     * here stotre the data of a user
     */
 
     public function store(Request $request){
@@ -40,52 +40,57 @@ class FormController extends Controller
             'form_id' => 'required',
             '*.required' => 'nullable',
         ]);
-    
+
         FormSubmission::create([
             'form_id' => jsdecode_userdata($validatedData['form_id']),
             'token' => Str::random(32),
             'form_data' => json_encode($request->all()),
         ]);
-    
+
         return response()->json(['success' => true, 'message' => 'Form submitted successfully!']);
     }
 
     /**
-     * here is the code for edit 
+     * here is the code for edit
     */
 
-    public function edit(Request $request,$token)
+    public function edit(Request $request,$form)
     {
-        $formSubmission = FormSubmission::where('token', $token)->firstOrFail();
+        // $formSubmission = FormSubmission::where('token', $token)->firstOrFail();
+        // dd($form);
+        $decryptedFormId = jsdecode_userdata($form);
+
+        $formSubmission = FormSubmission::where('form_id', $decryptedFormId)->firstOrFail();
 
         $formData = json_decode($formSubmission->form_data, true);
-    
-        $form = FormData::where('id',$formSubmission->form_id)->first();
-        $formStructure = $form->fields ?? [];
-        return view('user.form.edit', compact('formStructure', 'formData', 'token'));
+
+        $formResults = FormData::where('id',$formSubmission->form_id)->first();
+        $formStructure = $formResults->fields ?? [];
+        return view('user.form.edit', compact('formStructure', 'formData', 'form'));
     }
 
     /**
      * here is the coed for the update form data
     */
-    
-    public function update(Request $request, $token)
+
+    public function update(Request $request, $form)
     {
         // Retrieve the existing form submission
-        $formSubmission = FormSubmission::where('token', $token)->firstOrFail();
-    
-        // Dynamic validation: You can add custom rules here if needed
+        // $formSubmission = FormSubmission::where('token', $token)->firstOrFail();
+        $decryptedFormId = jsdecode_userdata($form);
+
+        $formSubmission = FormSubmission::where('form_id', $decryptedFormId)->firstOrFail();
+
         $validatedData = $request->validate([
-            '*.required' => 'nullable', // Placeholder for field-specific validation
+            '*.required' => 'nullable',
         ]);
-    
-        // Update the form submission with new form data
+
         $formSubmission->update([
-            'form_data' => json_encode($request->all()), // Encode the entire request as JSON
+            'form_data' => json_encode($request->all()),
         ]);
-    
+
         // Respond with success
         return response()->json(['success' => true, 'message' => 'Form updated successfully!']);
     }
-    
+
 }
