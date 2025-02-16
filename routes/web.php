@@ -18,6 +18,17 @@ Route::get('/dashboard', function () {
     return view('admin.users.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::prefix('user')->group(function () {
+    Route::get('/form/{form}', [App\Http\Controllers\User\FormController::class,'showForm'])->name('user.form');
+    Route::post('/store', [App\Http\Controllers\User\FormController::class,'store'])->name('user.store');
+    Route::get('/edit/{token}', [App\Http\Controllers\User\FormController::class, 'edit'])->name('user.form.edit');
+    Route::post('/update/{token}', [App\Http\Controllers\User\FormController::class, 'update'])->name('user.form.update');
+    
+
+});
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -61,6 +61,42 @@ $(document).on('click', '.toggle-password', function () {
     $(this).toggleClass('fa-eye fa-eye-slash');
 });
 
+function ajaxCall(url, method, params) {
+
+    return new Promise((resolve, reject) => {
+
+        let requestObject = {
+            url: url,
+            method: method,
+            data: params,
+            // processData: false,
+            // contentType: false,
+            dataType: 'json',
+            beforeSend: function () {
+                // jQuery('.show_btn_loader').removeClass('d-none');
+            },
+            complete: function (resp, status) {
+                // jQuery('.show_btn_loader').addClass('d-none');
+            },
+            success: function (response) {
+                resolve(response)
+            },
+            error: function (error) {
+                reject(error)
+            }
+        };
+        requestObject.headers = {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        };
+        if (params instanceof FormData) {
+            requestObject.processData = requestObject.contentType = false;
+            delete requestObject.dataType;
+        }
+        // console.log( requestObject );
+        jQuery.ajax(requestObject);
+    });
+
+}
 
 
 

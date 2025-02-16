@@ -22,6 +22,7 @@
                                 <th>created_at</th>
                                 {{-- <th>View</th> --}}
                                 <th>Action</th>
+                                <th>Copy link</th>
                             </tr>
                             @forelse ($forms as $form)
                                 <tr>
@@ -48,6 +49,13 @@
                                                     onclick="confirmDelete(event)">Delete</button>
                                             </form>
                                         @endcan
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-secondary btn-sm copy-link-btn"
+                                            data-link="{{ route('user.form', ['form' => jsencode_userdata($form->id)]) }}"
+                                            data-toggle="tooltip" title="Copy link">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
                                     </td>
                                 </tr>
 
@@ -106,6 +114,43 @@
                 @php
                     Session::forget('success');
                 @endphp
+
+
+                // here is  jquery code for copy link
+                $('[data-toggle="tooltip"]').tooltip();
+
+                $('.copy-link-btn').on('click', function(e) {
+                    e.preventDefault();
+                    const linkData = $(this).data('link');
+
+                    // Create temporary input element
+                    const tempInput = $('<input>');
+                    $('body').append(tempInput);
+                    tempInput.val(linkData).select();
+
+                    try {
+                        // Copy the text
+                        document.execCommand('copy');
+
+                        // Update button text/tooltip temporarily
+                        const $btn = $(this);
+                        const originalHTML = $btn.html();
+                        $btn.html('<i class="fas fa-check"></i> Copied!');
+                        $btn.removeClass('btn-secondary').addClass('btn-success');
+
+                        // Reset button after 2 seconds
+                        setTimeout(function() {
+                            $btn.html(originalHTML);
+                            $btn.removeClass('btn-success').addClass('btn-secondary');
+                        }, 2000);
+
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
+                    }
+
+                    // Remove temporary input
+                    tempInput.remove();
+                });
             });
         </script>
     @endpush
